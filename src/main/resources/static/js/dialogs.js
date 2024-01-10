@@ -70,7 +70,7 @@ function validateNameInput(inputId) {
 }
 
 function isValidName(name) {
-    return /^[a-zA-Z]+$/.test(name);
+    return /^[a-zA-Z\s]+$/.test(name);
 }
 
 function validateAddForm() {
