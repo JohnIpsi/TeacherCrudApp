@@ -1,0 +1,129 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="icon" href="images/favicon-16x16.png" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="css/generalStyle.css">
+    <link rel="stylesheet" type="text/css" href="css/icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+
+    <title>XMLHttpsRequest Ajax</title>
+</head>
+
+<body th:style="'background-image:url(' + @{/images/background_image_books.jpg} + '); background-repeat: repeat; background-size: contain; background-position: center;'">
+
+<!-- TopBar -->
+<div th:insert="~{/fragments/topBarFragment :: topBar}"></div>
+
+
+<!-- Table -->
+<div class="container mt-4">
+
+    <!--Table Header-->
+    <div class="tableHeader">
+        <label class="tableTitle"> Teachers Table </label>
+        <div class="searchBar">Search:
+            <input id="searchField" class="searchField" type="text" placeholder="..." onkeyup="filterTable()">
+        </div>
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th style="width: 10%" scope="col">Id</th>
+            <th style="width: 15%" scope="col">Teacher Id</th>
+            <th style="width: 30%" scope="col">Surname</th>
+            <th style="width: 30%" scope="col">FirstName</th>
+            <th style="width: 15%" scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="teacherModel, aa : ${teachersModel}">
+            <td th:text="${aa.index + 1}"></td>
+            <td th:text="${teacherModel.id}"></td>
+            <td th:text="${teacherModel.surname}"></td>
+            <td th:text="${teacherModel.firstName}"></td>
+            <td>
+                <button id="buttonUpdate" title="Edit" type="button" class="btn btn-primary mi mi-edit"
+                        th:attr="data-teacher-id=${teacherModel.id}, data-surname=${teacherModel.surname}, data-firstname=${teacherModel.firstName}"
+                        onclick="showUpdateDialog(this)"></button>
+
+                <button id="buttonDelete" title="Delete" type="button" class="btn btn-danger mi mi-trash"
+                        th:attr="data-teacher-id=${teacherModel.id}" onclick="showConfirmationDialog(this)"></button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!--Table Footer-->
+    <div class="tableFooter">
+        <!-- Add Button -->
+        <button id="buttonAdd" style="margin-left: 5px;" title="Add" type="button" class="btn btn-success mi mi-add"
+                onclick="showAddDialog()"></button>
+    </div>
+
+    <!-- Add Teacher Dialog -->
+    <div id="overlayAdd"></div>
+    <div id="addDialog">
+        <button type="button" class="btn-close position-absolute top-0 end-0" aria-label="Close"
+                onclick="hideAddDialog()"></button>
+        <p>Add a new record:</p>
+        <form th:action="@{/addRecord}" th:method="post" onsubmit="return validateAddForm()">
+            <div class="mb-3">
+                <label for="surnameInput" class="form-label">Surname:</label>
+                <input type="text" class="form-control" id="surnameInput" name="surname" required>
+            </div>
+            <div class="mb-3">
+                <label for="firstnameInput" class="form-label">Firstname:</label>
+                <input type="text" class="form-control" id="firstnameInput" name="firstName" required>
+            </div>
+            <button type="button" class="btn btn-secondary" onclick="hideAddDialog()">Cancel</button>
+            <button type="submit" class="btn btn-success">Confirm</button>
+        </form>
+    </div>
+
+    <!-- Update Teacher Dialog -->
+    <div id="overlayUpdate"></div>
+    <div id="updateDialog">
+        <button type="button" class="btn-close position-absolute top-0 end-0" aria-label="Close"
+                onclick="hideUpdateDialog()"></button>
+        <p>Edit this record:</p>
+        <form th:action="@{/updateRecord}" th:method="post" onsubmit="return validateUpdateForm()">
+            <input type="hidden" th:name="teacherId" id="selectedTeacherId"/>
+            <div class="mb-3">
+                <label for="surnameInputUpdate" class="form-label">Surname:</label>
+                <input type="text" class="form-control" id="surnameInputUpdate" name="surname" required>
+            </div>
+            <div class="mb-3">
+                <label for="firstnameInputUpdate" class="form-label">Firstname:</label>
+                <input type="text" class="form-control" id="firstnameInputUpdate" name="firstName" required>
+            </div>
+            <button type="button" class="btn btn-secondary" onclick="hideUpdateDialog()">Cancel</button>
+            <button type="submit" class="btn btn-success">Confirm</button>
+        </form>
+    </div>
+
+    <!-- Delete Confirmation Dialog -->
+    <div id="overlayDelete"></div>
+    <div id="confirmationDialog">
+        <button type="button" class="btn-close position-absolute top-0 end-0" aria-label="Close"
+                onclick="hideConfirmationDialog()"></button>
+        <p>Are you sure you want to delete this record?</p>
+        <button type="button" class="btn btn-secondary" onclick="cancelDelete()">Cancel</button>
+        <button type="button" class="btn btn-success" onclick="confirmDelete()">Confirm</button>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY4Nl1BUbT8+9CXq1UXH6ckI1g3S5I2K90K7np"
+        crossorigin="anonymous"></script>
+
+<script src="js/dialogs.js"></script>
+<script src="js/ajaxXMLHttpsRequest.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,19 @@
+.mi:before {
+    font-family: 'Material Symbols Outlined';
+    font-size:15px!important;
+}
+
+.mi2:before {
+    font-family: 'Material Symbols Outlined';
+    font-size:16px!important;
+    font-style:normal;
+    vertical-align: -3px;
+}
+
+
+.mi-add:before{content: "add";}
+.mi-edit:before{content: "edit";}
+.mi-trash:before{content: "delete";}
+.mi-logout:before{content: "logout";}
+
+

@@ -1,0 +1,14 @@
+<div th:fragment="topBar">
+    <nav class="navbar navbar-expand-lg navbar-light bg-secondary">
+        <div class="container" style="max-width: 97%!important;">
+            <a class="navbar-brand text-white" href="/teacherapp/index">Teachers CRUD Application</a>
+
+            <form th:action="@{/logout}" method="post">
+                <button type="submit" class="btn btn-link text-white" style="text-decoration: none;">
+                    Sign Out
+                    <i class="mi2 mi-logout"></i>
+                </button>
+            </form>
+        </div>
+    </nav>
+</div>
