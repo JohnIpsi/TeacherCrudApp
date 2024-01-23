@@ -23,6 +23,7 @@ Security**.
 - **Spring Security:** 2.5.2
 - **Spring OAuth2:** OAuth 2.0 authentication
 - **Thymeleaf:** Template engine for server-side rendering
+- **Bootstrap CSS:** 5.1.3
 - **Hibernate:** ORM framework
 
 **Application Features**
